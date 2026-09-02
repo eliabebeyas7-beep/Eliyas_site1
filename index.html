@@ -61,7 +61,8 @@ document.getElementById("pay").onclick = async () => {
     if (!r.ok) throw new Error(data.error || "Payment failed");
     window.location.href = data.checkout_url;
   } catch (e) {
-    status.textContent = e.message;
+    status.textContent = (data && data.error) ? data.error : (e.message || JSON.stringify(e));
+    
     pay.disabled = false;
   }
 };
