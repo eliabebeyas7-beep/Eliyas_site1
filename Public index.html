@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Support Eliyas ❤️</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="card">
+  <div class="avatar">E</div>
+  <p class="eyebrow">ELIYAS</p>
+  <h1>Support Me ❤️</h1>
+  <p class="subtitle">If you enjoy my content, you can support me with a small donation. Every bit means a lot.</p>
+
+  <div class="amounts">
+    <button data-amount="10">10 ETB</button>
+    <button data-amount="50">50 ETB</button>
+    <button data-amount="100">100 ETB</button>
+    <button data-amount="500">500 ETB</button>
+  </div>
+
+  <label class="label">Custom amount (ETB)</label>
+  <input id="amount" type="number" min="1" step="1" placeholder="Enter amount">
+
+  <label class="label">Your name</label>
+  <input id="name" type="text" placeholder="Your name">
+
+  <label class="label">Email</label>
+  <input id="email" type="email" placeholder="you@example.com">
+
+  <button id="pay" class="pay">❤️ Support Eliyas</button>
+  <p id="status" class="status"></p>
+  <p class="secure">Secure checkout powered by Chapa</p>
+</main>
+<script>
+const amount = document.getElementById("amount");
+document.querySelectorAll("[data-amount]").forEach(btn => {
+  btn.onclick = () => {
+    amount.value = btn.dataset.amount;
+    document.querySelectorAll("[data-amount]").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+  };
+});
+document.getElementById("pay").onclick = async () => {
+  const status = document.getElementById("status");
+  const pay = document.getElementById("pay");
+  status.textContent = "";
+  pay.disabled = true;
+  try {
+    const r = await fetch("/api/pay", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({
+        amount: amount.value,
+        first_name: document.getElementById("name").value,
+        email: document.getElementById("email").value
+      })
+    });
+    const data = await r.json();
+    if (!r.ok) throw new Error(data.error || "Payment failed");
+    window.location.href = data.checkout_url;
+  } catch (e) {
+    status.textContent = e.message;
+    pay.disabled = false;
+  }
+};
+</script>
+</body>
+</html>
