@@ -41,13 +41,17 @@
       </div>
 
       <div id="infoFields">
-        <label class="label" for="name">Your name</label>
-        <input id="name" type="text" placeholder="Your name">
+  <label class="label" for="name">Your name</label>
+  <input id="name" type="text" placeholder="Your name">
 
-        <label class="label" for="message">Message <span>(optional)</span></label>
-        <textarea id="message" maxlength="200" placeholder="Say something nice..."></textarea>
-        <div class="counter"><span id="count">0</span>/200</div>
+  <label class="label" for="email">Email</label>
+  <input id="email" type="email" placeholder="Your email" required>
+
+  <label class="label" for="message">Message <span>(optional)</span></label>
+  <textarea id="message" maxlength="200" placeholder="Say something nice..."></textarea>
+  <div class="counter"><span id="count">0</span>/200</div>
       </div>
+      
 
       <button id="pay" class="continue">Continue</button>
       <p id="status" class="status"></p>
@@ -105,7 +109,8 @@ pay.addEventListener("click", async () => {
       body: JSON.stringify({
         amount,
         first_name: showInfo.checked ? document.getElementById("name").value : "Supporter",
-        email: showInfo.checked ? document.getElementById("email").value : "supporter@gmail.com",
+        email: (showInfo.checked && document.getElementById("email")) ? document.getElementById("email").value : "supporter@gmail.com",
+        
         
         
         message: showInfo.checked ? message.value : ""
