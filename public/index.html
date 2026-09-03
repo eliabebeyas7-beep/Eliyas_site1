@@ -105,7 +105,7 @@ pay.addEventListener("click", async () => {
       body: JSON.stringify({
         amount,
         first_name: showInfo.checked ? document.getElementById("name").value : "Supporter",
-        email: "supporter@example.com",
+        email: document.getElementById("email").value,
         message: showInfo.checked ? message.value : ""
       })
     });
