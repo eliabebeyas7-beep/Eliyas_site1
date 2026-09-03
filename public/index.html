@@ -106,6 +106,7 @@ pay.addEventListener("click", async () => {
         amount,
         first_name: showInfo.checked ? document.getElementById("name").value : "Supporter",
         email: document.getElementById("email").value,
+        
         message: showInfo.checked ? message.value : ""
       })
     });
